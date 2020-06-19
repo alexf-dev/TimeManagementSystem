@@ -72,6 +72,7 @@
     <Compile Include="Objects\Contact.cs" />
     <Compile Include="Objects\Enumerators\CommandAttribute.cs" />
     <Compile Include="Objects\Enumerators\EventType.cs" />
+    <Compile Include="Objects\GetDataFilter.cs" />
     <Compile Include="Objects\TaskEvent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

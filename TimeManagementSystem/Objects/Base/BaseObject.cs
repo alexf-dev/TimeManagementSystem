@@ -11,6 +11,6 @@ namespace TimeManagementSystem.Objects
     /// </summary>
     public abstract class BaseObject : IBaseObject
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 }

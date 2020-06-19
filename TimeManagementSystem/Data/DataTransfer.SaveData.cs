@@ -50,7 +50,7 @@ namespace TimeManagementSystem.Data
                             }
                             catch (Exception exc)
                             {
-                                MessageBox.Show("Ошибка записи в БД: " + Environment.NewLine + exc.Message);
+                                MessageBox.Show("Error writing to database: " + Environment.NewLine + exc.Message);
                             }
                         }
                         break;

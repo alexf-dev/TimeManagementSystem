@@ -61,5 +61,10 @@ namespace TimeManagementSystem
 
             return taskEvent.Save(CommandAttribute.INSERT);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            List<TaskEvent> tasks = (DataTransfer.GetDataObjects<TaskEvent>(new GetDataFilterTaskEvent { AllObjects = true })).ConvertAll(it => (TaskEvent)it);
+        }
     }
 }

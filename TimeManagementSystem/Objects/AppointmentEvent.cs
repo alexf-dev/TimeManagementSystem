@@ -27,11 +27,11 @@ namespace TimeManagementSystem.Objects
             set
             {
                 _contact = value;
-                ContactId = _contact != null ? _contact.Id : Guid.Empty;
+                ContactId = _contact != null ? _contact.Id : 0;
             }
         }
 
-        public Guid ContactId { get; set; }
+        public int ContactId { get; set; }
 
         public bool DelRec { get; set; }
 
