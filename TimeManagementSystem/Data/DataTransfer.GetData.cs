@@ -57,12 +57,14 @@ namespace TimeManagementSystem.Data
         {
             if (typeof(T).Equals(typeof(TaskEvent)))
                 return GetDataList((GetDataFilterTaskEvent)filter);
+            else if (typeof(T).Equals(typeof(AppointmentEvent)))
+                return GetDataList((GetDataFilterAppointmentEvent)filter);
 
             return null;
         }
 
         /// <summary>
-        /// Get List<User> from DB
+        /// Get List<TaskEvent> from DB
         /// </summary>
         /// <param name="dataObject"></param>
         /// <param name="filter"></param>
@@ -77,7 +79,30 @@ namespace TimeManagementSystem.Data
                     //id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, time_regdate as Time, reg_date as RegDate, event_type as ActionType, rec_date as RecDate, del_rec as DelRec
                     //    @Name, @Description, @Year, @Month, @Date, @Time, @RegDate, @ActionType, @RecDate, @DelRec
 
-                    customer = conn.Query<TaskEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, rec_date as RecDate, del_rec as DelRec FROM t_events").ToList();
+                    customer = conn.Query<TaskEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 2").ToList();
+                }
+            }
+
+            foreach (var item in customer)
+                item.Time = item.RegDate - item.Date;
+
+            return customer.Cast<IBaseObject>().ToList();
+        }
+
+        /// <summary>
+        /// Get List<AppointmentEvent> from DB
+        /// </summary>
+        /// <param name="dataObject"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        private static List<IBaseObject> GetDataList(GetDataFilterAppointmentEvent filter)
+        {
+            var customer = new List<TaskEvent>();
+            using (var conn = OpenConnection(ConnectionString))
+            {
+                if (filter.AllObjects)
+                {
+                    customer = conn.Query<TaskEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, contact_id as ContactId, location as Location, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 1").ToList();
                 }
             }
 

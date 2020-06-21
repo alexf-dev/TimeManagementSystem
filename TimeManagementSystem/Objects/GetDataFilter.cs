@@ -34,7 +34,7 @@ namespace TimeManagementSystem.Objects
         public string MiddleName { get; set; }
     }
 
-    public class GetDataFilterDepartment : GetDataFilter
+    public class GetDataFilterAppointmentEvent : GetDataFilter
     {
 
     }

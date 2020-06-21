@@ -65,6 +65,8 @@ namespace TimeManagementSystem
         private void button2_Click(object sender, EventArgs e)
         {
             List<TaskEvent> tasks = (DataTransfer.GetDataObjects<TaskEvent>(new GetDataFilterTaskEvent { AllObjects = true })).ConvertAll(it => (TaskEvent)it);
+            List<AppointmentEvent> appointments = (DataTransfer.GetDataObjects<AppointmentEvent>(new GetDataFilterAppointmentEvent { AllObjects = true })).ConvertAll(it => (AppointmentEvent)it);
+
         }
     }
 }

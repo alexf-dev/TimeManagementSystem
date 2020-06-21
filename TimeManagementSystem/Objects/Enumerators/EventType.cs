@@ -8,7 +8,10 @@ namespace TimeManagementSystem.Objects
 {
     public enum EventType
     {
+        [LocalizedName("Appointment")]
         Appointment = 1,
+
+        [LocalizedName("Task")]
         Task = 2
     }
 }
