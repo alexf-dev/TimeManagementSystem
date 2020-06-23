@@ -59,6 +59,8 @@ namespace TimeManagementSystem.Data
                 return GetDataList((GetDataFilterTaskEvent)filter);
             else if (typeof(T).Equals(typeof(AppointmentEvent)))
                 return GetDataList((GetDataFilterAppointmentEvent)filter);
+            else if (typeof(T).Equals(typeof(Contact)))
+                return GetDataList((GetDataFilterContact)filter);
 
             return null;
         }
@@ -76,10 +78,19 @@ namespace TimeManagementSystem.Data
             {
                 if (filter.AllObjects)
                 {
-                    //id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, time_regdate as Time, reg_date as RegDate, event_type as ActionType, rec_date as RecDate, del_rec as DelRec
-                    //    @Name, @Description, @Year, @Month, @Date, @Time, @RegDate, @ActionType, @RecDate, @DelRec
-
                     customer = conn.Query<TaskEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 2").ToList();
+                }
+                else if (filter.IsDayPlan)
+                {
+                    customer = conn.Query<TaskEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 2 AND date_regdate = @DayDate ", new { DayDate = filter.DayDate }).ToList();
+                }
+                else if (filter.IsWeekPlan)
+                {
+                    customer = conn.Query<TaskEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 2 AND date_regdate >= @BeginDate AND date_regdate <= @EndDate ", new { BeginDate = filter.BeginDate, EndDate = filter.EndDate }).ToList();
+                }
+                else if (filter.IsMonthPlan)
+                {
+                    customer = conn.Query<TaskEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 2 AND month = @MonthFilter ", new { MonthFilter = filter.Month }).ToList();
                 }
             }
 
@@ -97,17 +108,49 @@ namespace TimeManagementSystem.Data
         /// <returns></returns>
         private static List<IBaseObject> GetDataList(GetDataFilterAppointmentEvent filter)
         {
-            var customer = new List<TaskEvent>();
+            var customer = new List<AppointmentEvent>();
             using (var conn = OpenConnection(ConnectionString))
             {
                 if (filter.AllObjects)
                 {
-                    customer = conn.Query<TaskEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, contact_id as ContactId, location as Location, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 1").ToList();
+                    customer = conn.Query<AppointmentEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, contact_id as ContactId, location as Location, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 1 ").ToList();
+                }
+                else if (filter.IsDayPlan)
+                {
+                    customer = conn.Query<AppointmentEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, contact_id as ContactId, location as Location, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 1 AND date_regdate = @DayDate ", new { DayDate = filter.DayDate }).ToList();
+                }
+                else if (filter.IsWeekPlan)
+                {
+                    customer = conn.Query<AppointmentEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, contact_id as ContactId, location as Location, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 1 AND date_regdate >= @BeginDate AND date_regdate <= @EndDate ", new { BeginDate = filter.BeginDate, EndDate = filter.EndDate }).ToList();
+                }
+                else if (filter.IsMonthPlan)
+                {
+                    customer = conn.Query<AppointmentEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, contact_id as ContactId, location as Location, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE event_type = 1 AND month = @MonthFilter ", new { MonthFilter = filter.Month }).ToList();
                 }
             }
 
             foreach (var item in customer)
                 item.Time = item.RegDate - item.Date;
+
+            return customer.Cast<IBaseObject>().ToList();
+        }
+
+        /// <summary>
+        /// Get List<Contact> from DB
+        /// </summary>
+        /// <param name="dataObject"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        private static List<IBaseObject> GetDataList(GetDataFilterContact filter)
+        {
+            var customer = new List<Contact>();
+            using (var conn = OpenConnection(ConnectionString))
+            {
+                if (filter.AllObjects)
+                {
+                    customer = conn.Query<Contact>("SELECT id as Id, name as Name, phone as Phone, email as EMail, rec_date as RecDate, del_rec as DelRec FROM t_contacts ").ToList();
+                }
+            }
 
             return customer.Cast<IBaseObject>().ToList();
         }

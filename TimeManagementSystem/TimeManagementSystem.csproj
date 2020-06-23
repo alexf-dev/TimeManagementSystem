@@ -66,11 +66,23 @@
     <Compile Include="Data\DataTransfer.SaveData.cs" />
     <Compile Include="Data\DataTransfer.GetData.cs" />
     <Compile Include="Data\DataTransfer.cs" />
+    <Compile Include="Forms\ContactEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ContactEditForm.Designer.cs">
+      <DependentUpon>ContactEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EditEventForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\EditEventForm.Designer.cs">
       <DependentUpon>EditEventForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EventList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EventList.Designer.cs">
+      <DependentUpon>EventList.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -86,13 +98,20 @@
     <Compile Include="Objects\Base\ISaveObject.cs" />
     <Compile Include="Objects\Contact.cs" />
     <Compile Include="Objects\Enumerators\CommandAttribute.cs" />
+    <Compile Include="Objects\Enumerators\EventListType.cs" />
     <Compile Include="Objects\Enumerators\EventType.cs" />
     <Compile Include="Objects\GetDataFilter.cs" />
     <Compile Include="Objects\TaskEvent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\ContactEditForm.resx">
+      <DependentUpon>ContactEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditEventForm.resx">
       <DependentUpon>EditEventForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EventList.resx">
+      <DependentUpon>EventList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

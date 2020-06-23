@@ -9,7 +9,7 @@ namespace TimeManagementSystem.Objects
     /// <summary>
     /// Contact class
     /// </summary>
-    public class Contact : BaseObject
+    public class Contact : BaseObject, ISaveObject
     {
         /// <summary>
         /// Contact's name
@@ -25,5 +25,14 @@ namespace TimeManagementSystem.Objects
         /// Contact's email
         /// </summary>
         public string EMail { get; set; }
+
+        public bool DelRec { get ; set ; }
+
+        public DateTime RecDate { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

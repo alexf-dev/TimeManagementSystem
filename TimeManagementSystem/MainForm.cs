@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TimeManagementSystem.Data;
+using TimeManagementSystem.Forms;
 using TimeManagementSystem.Objects;
+using TimeManagementSystem.Objects.Enumerators;
 
 namespace TimeManagementSystem
 {
@@ -17,56 +20,53 @@ namespace TimeManagementSystem
         public MainForm()
         {
             InitializeComponent();
+
+            cmbMonth.Items.AddRange(DateTimeFormatInfo.InvariantInfo.MonthNames);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e)
         {
-            string result;
-
-            if (IsValidData(out result))
-            {
-                if (SaveEvent())
-                    MessageBox.Show("Event is save");
-                else
-                    MessageBox.Show("Save error");
-            }
-            else
-            {
-                MessageBox.Show(result, "Attention!");
-                return;
-            }
-        }
-
-        private bool IsValidData(out string result)
-        {
-            result = "";
-
-            return true;
-        }
-
-        private bool SaveEvent()
-        {
-            TaskEvent taskEvent = new TaskEvent();
-
-            DateTime date = DateTime.Now;
-            taskEvent.Name = "Learn C#";
-            taskEvent.Description = "I learn C#";
-            taskEvent.Year = date.Year;
-            taskEvent.Month = date.Month;
-            taskEvent.Date = date.Date;
-            taskEvent.Time = date.TimeOfDay;
-            taskEvent.RegDate = date;
-            taskEvent.RecDate = DateTime.Now;
-            taskEvent.ActionType = EventType.Task;
-
-            return taskEvent.Save(CommandAttribute.INSERT);
+            EditEventForm edit = new EditEventForm(null, EventType.Task);
+            edit.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            List<TaskEvent> tasks = (DataTransfer.GetDataObjects<TaskEvent>(new GetDataFilterTaskEvent { AllObjects = true })).ConvertAll(it => (TaskEvent)it);
-            List<AppointmentEvent> appointments = (DataTransfer.GetDataObjects<AppointmentEvent>(new GetDataFilterAppointmentEvent { AllObjects = true })).ConvertAll(it => (AppointmentEvent)it);
+            EditEventForm edit = new EditEventForm(null, EventType.Appointment);
+            edit.Show();
+        }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnDayEventList_Click(object sender, EventArgs e)
+        {
+            EventList listForm = new EventList(EventListType.DayPlan, dtpDay.Value.Date, null, null, -1);
+            listForm.Show();
+        }
+
+        private void btnWeekEventList_Click(object sender, EventArgs e)
+        {
+            EventList listForm = new EventList(EventListType.WeekPlan, null, dtpBeginDate.Value.Date, dtpEndDate.Value.Date, -1);
+            listForm.Show();
+        }
+
+        private void btnMonthEventList_Click(object sender, EventArgs e)
+        {
+            EventList listForm = new EventList(EventListType.MonthPlan, null, null, null, cmbMonth.SelectedIndex + 1);
+            listForm.Show();
+        }
+
+        private void contactToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ContactEditForm ce = new ContactEditForm();
+            ce.Show();
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

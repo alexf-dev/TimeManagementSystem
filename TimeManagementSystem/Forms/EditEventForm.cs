@@ -15,11 +15,11 @@ namespace TimeManagementSystem.Forms
     public partial class EditEventForm : Form
     {
         private List<eventTypeHelper> _eventTypes = new List<eventTypeHelper>();
+        private List<Contact> contacts = new List<Contact>();
+        
         private TaskEvent taskEvent = null;
         private AppointmentEvent appointmentEvent = null;
         private ISaveObject eventValue;
-        private bool _isNewRecord = true;
-
 
         class eventTypeHelper
         {
@@ -40,29 +40,31 @@ namespace TimeManagementSystem.Forms
             if (isNewRecord)
                 this.Text = "New event";
 
-            _isNewRecord = isNewRecord;
-
             SetEventTypeHelperList();
+            SetContactList();
 
             cmbEventTypes.Items.AddRange(_eventTypes.ToArray());
 
-            if (_eventValue != null)
-            {
-                if (type == EventType.Appointment)
-                    eventValue = (AppointmentEvent)_eventValue;
-                else
-                    eventValue = (TaskEvent)_eventValue;
-
-                cmbEventTypes.SelectedItem = _eventTypes.First(it => it.TypeId == (int)_eventValue.ActionType);
-            }
+            if (_eventValue != null)            
+                cmbEventTypes.SelectedItem = _eventTypes.First(it => it.TypeId == (int)_eventValue.ActionType);  
             else
+                cmbEventTypes.SelectedItem = _eventTypes.First(it => it.TypeId == (int)type);
+
+            if (type == EventType.Task)
             {
-                if (type == EventType.Appointment)                
-                    eventValue = new AppointmentEvent();                
-                else
-                    eventValue = new TaskEvent();
-                 
+                label4.Visible = label8.Visible = false;
+                comboBox2.Visible = false;
+                textEdit4.Visible = false;
+                button1.Visible = false;
             }
+
+        }
+
+        private void SetContactList()
+        {
+            contacts = (DataTransfer.GetDataObjects<Contact>(new GetDataFilterContact { AllObjects = true })).ConvertAll(it => (Contact)it);
+            comboBox2.Items.AddRange(contacts.ToArray());
+
         }
 
         private void SetEventTypeHelperList()
@@ -81,6 +83,11 @@ namespace TimeManagementSystem.Forms
             {
                 bool isSuccess = false;
                 
+                if (((eventTypeHelper)cmbEventTypes.SelectedItem).EventType == EventType.Appointment)
+                    eventValue = new AppointmentEvent();
+                else
+                    eventValue = new TaskEvent();
+
                 isSuccess = SaveEvent(eventValue);
                 
                 if (isSuccess)
@@ -114,10 +121,13 @@ namespace TimeManagementSystem.Forms
             {
                 if (((eventTypeHelper)cmbEventTypes.SelectedItem).EventType == EventType.Appointment)
                 {
-                    if (comboBox2.SelectedValue == null)
+                    if (comboBox2.SelectedItem == null)
                         result += "Event's contact is null\r\n";
                 }
             }
+
+            if (!string.IsNullOrWhiteSpace(result))
+                return false;
 
             return true;
         }
@@ -129,15 +139,19 @@ namespace TimeManagementSystem.Forms
                 appointmentEvent = (AppointmentEvent)_event;
                 appointmentEvent.Name = textEdit1.Text;
                 appointmentEvent.Description = textBox1.Text;
-                appointmentEvent.RegDate = dateTimePicker1.Value + dateTimePicker2.Value.TimeOfDay;
+                appointmentEvent.RegDate = dateTimePicker1.Value.Date + dateTimePicker2.Value.TimeOfDay;
                 appointmentEvent.Year = appointmentEvent.RegDate.Year;
                 appointmentEvent.Month = appointmentEvent.RegDate.Month;
                 appointmentEvent.Date = dateTimePicker1.Value.Date;
                 appointmentEvent.Time = dateTimePicker2.Value.TimeOfDay;
                 appointmentEvent.RecDate = DateTime.Now;
-                appointmentEvent.ActionType = ((eventTypeHelper)cmbEventTypes.SelectedItem).EventType;
-                appointmentEvent.Contact = (Contact)comboBox2.SelectedItem;
-                appointmentEvent.ContactId = ((Contact)comboBox2.SelectedItem).Id;
+                if (cmbEventTypes.SelectedItem != null)
+                    appointmentEvent.ActionType = ((eventTypeHelper)cmbEventTypes.SelectedItem).EventType;
+                if (comboBox2.SelectedItem is Contact)
+                {
+                    appointmentEvent.Contact = (Contact)comboBox2.SelectedItem;
+                    appointmentEvent.ContactId = ((Contact)comboBox2.SelectedItem).Id;
+                }
                 appointmentEvent.Location = textEdit4.Text;
 
                 _event = appointmentEvent;
@@ -147,9 +161,9 @@ namespace TimeManagementSystem.Forms
                 taskEvent = (TaskEvent)_event;
                 taskEvent.Name = textEdit1.Text;
                 taskEvent.Description = textBox1.Text;
-                taskEvent.RegDate = dateTimePicker1.Value + dateTimePicker2.Value.TimeOfDay;
-                taskEvent.Year = appointmentEvent.RegDate.Year;
-                taskEvent.Month = appointmentEvent.RegDate.Month;
+                taskEvent.RegDate = dateTimePicker1.Value.Date + dateTimePicker2.Value.TimeOfDay;
+                taskEvent.Year = taskEvent.RegDate.Year;
+                taskEvent.Month = taskEvent.RegDate.Month;
                 taskEvent.Date = dateTimePicker1.Value.Date;
                 taskEvent.Time = dateTimePicker2.Value.TimeOfDay;
                 taskEvent.RecDate = DateTime.Now;
@@ -164,6 +178,31 @@ namespace TimeManagementSystem.Forms
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void cmbEventTypes_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (cmbEventTypes.SelectedItem == null || ((eventTypeHelper)cmbEventTypes.SelectedItem).EventType == EventType.Task)
+            {
+                label4.Visible = label8.Visible = false;
+                comboBox2.Visible = false;
+                textEdit4.Visible = false;
+                button1.Visible = false;
+            }
+            else
+                if (((eventTypeHelper)cmbEventTypes.SelectedItem).EventType == EventType.Appointment)
+            {
+                label4.Visible = label8.Visible = true;
+                comboBox2.Visible = true;
+                textEdit4.Visible = true;
+                button1.Visible = true;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ContactEditForm ce = new ContactEditForm();
+            ce.Show();
         }
     }
 }

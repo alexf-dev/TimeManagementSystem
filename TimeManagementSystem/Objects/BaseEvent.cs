@@ -50,5 +50,12 @@ namespace TimeManagementSystem.Objects
         /// Event type
         /// </summary>
         public EventType ActionType { get; set; }
+
+        public string EventName { get { return Name; } }
+
+        public DayOfWeek DayOfWeek { get { return Date.DayOfWeek; } }
+
+        public int DayOfMonth { get { return Date.Day; } }
+
     }
 }

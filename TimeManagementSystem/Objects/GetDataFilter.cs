@@ -27,24 +27,26 @@ namespace TimeManagementSystem.Objects
         }
     }
 
-    public class GetDataFilterUser : GetDataFilter
+    public class EventDataFilter : GetDataFilter
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string MiddleName { get; set; }
+        public bool IsDayPlan { get; set; }
+        public bool IsWeekPlan { get; set; }
+        public bool IsMonthPlan { get; set; }
+        public DateTime DayDate { get; set; }
+        public DateTime BeginDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int Month { get; set; }
     }
 
-    public class GetDataFilterAppointmentEvent : GetDataFilter
+    public class GetDataFilterAppointmentEvent : EventDataFilter
     {
-
     }
 
-    public class GetDataFilterTaskEvent : GetDataFilter
+    public class GetDataFilterTaskEvent : EventDataFilter
     {
-
     }
 
-    public class GetDataFilterScriptMD : GetDataFilter
+    public class GetDataFilterContact : GetDataFilter
     {
 
     }

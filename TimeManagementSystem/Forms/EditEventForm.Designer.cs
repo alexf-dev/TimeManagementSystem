@@ -187,6 +187,7 @@
             this.button1.TabIndex = 8;
             this.button1.Text = "+";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // comboBox2
             // 
@@ -212,6 +213,7 @@
             this.cmbEventTypes.Name = "cmbEventTypes";
             this.cmbEventTypes.Size = new System.Drawing.Size(144, 21);
             this.cmbEventTypes.TabIndex = 5;
+            this.cmbEventTypes.SelectedValueChanged += new System.EventHandler(this.cmbEventTypes_SelectedValueChanged);
             // 
             // btnSave
             // 
@@ -245,6 +247,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "EditEventForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit event";
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).EndInit();
