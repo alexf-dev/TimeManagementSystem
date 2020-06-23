@@ -27,6 +27,8 @@ namespace TimeManagementSystem.Forms
             public DateTime RegDate { get; set; }
             public string EventName { get { return Name; } }
             public DayOfWeek DayOfWeek { get; set; }
+            public string Location { get; set; }
+            public string ContactName { get; set; }
 
             public string TimeofDay { get { return RegDate.TimeOfDay.ToString(); } }
             public string DayWithDate { get { return DayOfWeek.ToString() + Environment.NewLine + RegDate.Date.ToShortDateString().ToString(); } }
@@ -56,6 +58,7 @@ namespace TimeManagementSystem.Forms
                 case EventListType.MonthPlan:
                     Month = (int)month;
                     tabControl1.TabPages.Remove(tabPage1);
+                    tabPage2.Text = "Month plan";
                     SetMonthEvents(Month);
                     break;
             }              
@@ -67,15 +70,18 @@ namespace TimeManagementSystem.Forms
 
             List<TaskEvent> tasks = (DataTransfer.GetDataObjects<TaskEvent>(new GetDataFilterTaskEvent { IsDayPlan = true, DayDate = this.DayDate })).ConvertAll(it => (TaskEvent)it);
             List<AppointmentEvent> appointments = (DataTransfer.GetDataObjects<AppointmentEvent>(new GetDataFilterAppointmentEvent { IsDayPlan = true, DayDate = this.DayDate })).ConvertAll(it => (AppointmentEvent)it);
-
-            List<BaseEvent> events = new List<BaseEvent>();
-            events.AddRange(tasks);
-            events.AddRange(appointments);
+            List<Contact>  contacts = (DataTransfer.GetDataObjects<Contact>(new GetDataFilterContact { AllObjects = true })).ConvertAll(it => (Contact)it);
 
             List<helper> helpers = new List<helper>();
 
-            foreach (var item in events)
-                helpers.Add(new helper() { Name = item.Name, Description = item.Description, RegDate = item.RegDate, DayOfWeek = item.DayOfWeek });
+            foreach (var item in appointments)
+            {
+                item.Contact = contacts.FirstOrDefault(it => it.Id == item.ContactId);
+                helpers.Add(new helper() { Name = item.Name, Description = item.Description, RegDate = item.RegDate, DayOfWeek = item.DayOfWeek, ContactName = item.Contact.Name, Location = item.Location });
+            }
+
+            foreach (var item in tasks)
+                helpers.Add(new helper() { Name = item.Name, Description = item.Description, RegDate = item.RegDate, DayOfWeek = item.DayOfWeek, ContactName = "  -  ", Location = "  -  " });
 
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = helpers.OrderBy(it => it.RegDate).ToList();
@@ -83,21 +89,21 @@ namespace TimeManagementSystem.Forms
 
         private void SetWeekEvents(DateTime beginDate, DateTime endDate)
         {
-            //dataGridView2
-
             List<TaskEvent> tasks = (DataTransfer.GetDataObjects<TaskEvent>(new GetDataFilterTaskEvent { IsWeekPlan = true, BeginDate = this.BeginDate, EndDate = this.EndDate })).ConvertAll(it => (TaskEvent)it);
             List<AppointmentEvent> appointments = (DataTransfer.GetDataObjects<AppointmentEvent>(new GetDataFilterAppointmentEvent { IsWeekPlan = true, BeginDate = this.BeginDate, EndDate = this.EndDate })).ConvertAll(it => (AppointmentEvent)it);
-
-            List<BaseEvent> events = new List<BaseEvent>();
-            events.AddRange(tasks);
-            events.AddRange(appointments);
+            List<Contact> contacts = (DataTransfer.GetDataObjects<Contact>(new GetDataFilterContact { AllObjects = true })).ConvertAll(it => (Contact)it);
 
             List<helper> helpers = new List<helper>();
 
-            foreach (var item in events)
-                helpers.Add(new helper() { Name = item.Name, Description = item.Description, RegDate = item.RegDate, DayOfWeek = item.DayOfWeek });
+            foreach (var item in appointments)
+            {
+                item.Contact = contacts.FirstOrDefault(it => it.Id == item.ContactId);
+                helpers.Add(new helper() { Name = item.Name, Description = item.Description, RegDate = item.RegDate, DayOfWeek = item.DayOfWeek, ContactName = item.Contact.Name, Location = item.Location });
+            }
 
-            //dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
+            foreach (var item in tasks)
+                helpers.Add(new helper() { Name = item.Name, Description = item.Description, RegDate = item.RegDate, DayOfWeek = item.DayOfWeek, ContactName = "  -  ", Location = "  -  " });
+
             dataGridView2.AutoGenerateColumns = false;
             dataGridView2.DataSource = helpers.OrderBy(it => it.RegDate).ToList();
         }
@@ -106,17 +112,19 @@ namespace TimeManagementSystem.Forms
         {
             List<TaskEvent> tasks = (DataTransfer.GetDataObjects<TaskEvent>(new GetDataFilterTaskEvent { IsMonthPlan = true, Month = this.Month })).ConvertAll(it => (TaskEvent)it);
             List<AppointmentEvent> appointments = (DataTransfer.GetDataObjects<AppointmentEvent>(new GetDataFilterAppointmentEvent { IsMonthPlan = true, Month = this.Month })).ConvertAll(it => (AppointmentEvent)it);
-
-            List<BaseEvent> events = new List<BaseEvent>();
-            events.AddRange(tasks);
-            events.AddRange(appointments);
+            List<Contact> contacts = (DataTransfer.GetDataObjects<Contact>(new GetDataFilterContact { AllObjects = true })).ConvertAll(it => (Contact)it);
 
             List<helper> helpers = new List<helper>();
 
-            foreach (var item in events)
-                helpers.Add(new helper() { Name = item.Name, Description = item.Description, RegDate = item.RegDate, DayOfWeek = item.DayOfWeek });
+            foreach (var item in appointments)
+            {
+                item.Contact = contacts.FirstOrDefault(it => it.Id == item.ContactId);
+                helpers.Add(new helper() { Name = item.Name, Description = item.Description, RegDate = item.RegDate, DayOfWeek = item.DayOfWeek, ContactName = item.Contact.Name, Location = item.Location });
+            }
 
-            //dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
+            foreach (var item in tasks)
+                helpers.Add(new helper() { Name = item.Name, Description = item.Description, RegDate = item.RegDate, DayOfWeek = item.DayOfWeek, ContactName = "  -  ", Location = "  -  " });
+
             dataGridView2.AutoGenerateColumns = false;
             dataGridView2.DataSource = helpers.OrderBy(it => it.RegDate).ToList();
         }
@@ -165,7 +173,7 @@ namespace TimeManagementSystem.Forms
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.RowIndex == 0)
+            if (e.RowIndex == 0 || e.ColumnIndex != 0)
                 return;
             if (IsTheSameCellValueGrid1(e.ColumnIndex, e.RowIndex))
             {
@@ -174,18 +182,7 @@ namespace TimeManagementSystem.Forms
             }
         }
 
-        private void dataGridView2_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.RowIndex == 0)
-                return;
-            if (IsTheSameCellValueGrid2(e.ColumnIndex, e.RowIndex))
-            {
-                e.Value = "";
-                e.FormattingApplied = true;
-            }
-        }
-
-        private void dataGridView2_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private void dataGridView2_CellPainting_1(object sender, DataGridViewCellPaintingEventArgs e)
         {
             e.AdvancedBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.None;
             if (e.RowIndex < 1 || e.ColumnIndex != 0)
@@ -198,6 +195,17 @@ namespace TimeManagementSystem.Forms
             {
                 e.AdvancedBorderStyle.Top = dataGridView2.AdvancedCellBorderStyle.Top;
             }
-        }        
+        }
+
+        private void dataGridView2_CellFormatting_1(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex == 0 || e.ColumnIndex != 0)
+                return;
+            if (IsTheSameCellValueGrid2(e.ColumnIndex, e.RowIndex))
+            {
+                e.Value = "";
+                e.FormattingApplied = true;
+            }
+        }
     }
 }
