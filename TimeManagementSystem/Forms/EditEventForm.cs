@@ -54,7 +54,7 @@ namespace TimeManagementSystem.Forms
             {
                 label4.Visible = label8.Visible = false;
                 comboBox2.Visible = false;
-                textEdit4.Visible = false;
+                textBox3.Visible = false;
                 button1.Visible = false;
             }
 
@@ -106,7 +106,7 @@ namespace TimeManagementSystem.Forms
         {
             result = "";
 
-            if (string.IsNullOrWhiteSpace(textEdit1.Text))
+            if (string.IsNullOrWhiteSpace(textBox2.Text))
                 result += "Event's name is empty\r\n";
 
             if (dateTimePicker1.Value == null || dateTimePicker1.Value == DateTime.MinValue)
@@ -137,7 +137,7 @@ namespace TimeManagementSystem.Forms
             if (_event is AppointmentEvent)
             {
                 appointmentEvent = (AppointmentEvent)_event;
-                appointmentEvent.Name = textEdit1.Text;
+                appointmentEvent.Name = textBox2.Text;
                 appointmentEvent.Description = textBox1.Text;
                 appointmentEvent.RegDate = dateTimePicker1.Value.Date + dateTimePicker2.Value.TimeOfDay;
                 appointmentEvent.Year = appointmentEvent.RegDate.Year;
@@ -152,14 +152,14 @@ namespace TimeManagementSystem.Forms
                     appointmentEvent.Contact = (Contact)comboBox2.SelectedItem;
                     appointmentEvent.ContactId = ((Contact)comboBox2.SelectedItem).Id;
                 }
-                appointmentEvent.Location = textEdit4.Text;
+                appointmentEvent.Location = textBox3.Text;
 
                 _event = appointmentEvent;
             }
             else if (_event is TaskEvent)
             {
                 taskEvent = (TaskEvent)_event;
-                taskEvent.Name = textEdit1.Text;
+                taskEvent.Name = textBox2.Text;
                 taskEvent.Description = textBox1.Text;
                 taskEvent.RegDate = dateTimePicker1.Value.Date + dateTimePicker2.Value.TimeOfDay;
                 taskEvent.Year = taskEvent.RegDate.Year;
@@ -186,7 +186,7 @@ namespace TimeManagementSystem.Forms
             {
                 label4.Visible = label8.Visible = false;
                 comboBox2.Visible = false;
-                textEdit4.Visible = false;
+                textBox3.Visible = false;
                 button1.Visible = false;
             }
             else
@@ -194,7 +194,7 @@ namespace TimeManagementSystem.Forms
             {
                 label4.Visible = label8.Visible = true;
                 comboBox2.Visible = true;
-                textEdit4.Visible = true;
+                textBox3.Visible = true;
                 button1.Visible = true;
             }
         }
