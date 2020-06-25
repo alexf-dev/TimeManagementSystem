@@ -15,8 +15,9 @@ namespace TimeManagementSystem.Forms
     public partial class ContactEditForm : Form
     {
         private bool _isNewRecord = true;
+        private bool _isCloseAfterSave = false;
 
-        public ContactEditForm(bool isNewRecord = true)
+        public ContactEditForm(bool isCloseafterSave = false, bool isNewRecord = true)
         {
             InitializeComponent();
 
@@ -24,6 +25,7 @@ namespace TimeManagementSystem.Forms
                 this.Text = "New contact";
 
             _isNewRecord = isNewRecord;
+            _isCloseAfterSave = isCloseafterSave;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,9 +39,12 @@ namespace TimeManagementSystem.Forms
                 isSuccess = SaveContact(new Contact());
 
                 if (isSuccess)
-                    MessageBox.Show("Contact is save");
+                    MessageBox.Show("SAVED");
                 else
                     MessageBox.Show("Save error");
+
+                if (_isCloseAfterSave)
+                    this.Close();
             }
             else
             {

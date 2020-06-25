@@ -62,9 +62,9 @@ namespace TimeManagementSystem.Forms
 
         private void SetContactList()
         {
+            comboBox2.Items.Clear();
             contacts = (DataTransfer.GetDataObjects<Contact>(new GetDataFilterContact { AllObjects = true })).ConvertAll(it => (Contact)it);
             comboBox2.Items.AddRange(contacts.ToArray());
-
         }
 
         private void SetEventTypeHelperList()
@@ -91,7 +91,7 @@ namespace TimeManagementSystem.Forms
                 isSuccess = SaveEvent(eventValue);
                 
                 if (isSuccess)
-                    MessageBox.Show("Event is save");
+                    MessageBox.Show("SAVED");
                 else
                     MessageBox.Show("Save error");
             }
@@ -201,8 +201,11 @@ namespace TimeManagementSystem.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ContactEditForm ce = new ContactEditForm();
-            ce.Show();
+            ContactEditForm ce = new ContactEditForm(true);
+            if (ce.ShowDialog() != null)
+            {
+                SetContactList();
+            }
         }
     }
 }

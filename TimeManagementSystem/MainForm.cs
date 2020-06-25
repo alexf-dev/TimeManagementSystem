@@ -68,5 +68,11 @@ namespace TimeManagementSystem
         {
             this.Close();
         }
+
+        private void contactListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ContactList cl = new ContactList();
+            cl.Show();
+        }
     }
 }
