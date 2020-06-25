@@ -50,14 +50,4 @@ namespace TimeManagementSystem.Objects
     {
 
     }
-
-    public class GetDataFilterActionMD : GetDataFilter
-    {
-
-    }
-
-    public class GetDataFilterReport : GetDataFilter
-    {
-        public string OperatorFullName { get; set; }
-    }
 }

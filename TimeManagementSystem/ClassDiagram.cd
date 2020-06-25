@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TimeManagementSystem.Objects.BaseObject">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Base\BaseObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TimeManagementSystem.Objects.BaseEvent">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAgAAAAAAAAAAQAAIAgEAAFAAAEACAAAQA=</HashCode>
+      <FileName>Objects\BaseEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeManagementSystem.Objects.Contact">
+    <Position X="1" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEABAAAAQAACAAAAAAAAAAICAAAAA=</HashCode>
+      <FileName>Objects\Contact.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TimeManagementSystem.Objects.AppointmentEvent">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAACBIAAAAAAAAAAAEAAAAAACAAAAA=</HashCode>
+      <FileName>Objects\AppointmentEvent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TimeManagementSystem.Objects.TaskEvent">
+    <Position X="3.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Objects\TaskEvent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TimeManagementSystem.Objects.GetDataFilter" Collapsed="true">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAAAAAACAQAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Objects\GetDataFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeManagementSystem.Objects.EventDataFilter">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgBBAAAAAAIAgAAAAAAgAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\GetDataFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeManagementSystem.Objects.GetDataFilterAppointmentEvent" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\GetDataFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeManagementSystem.Objects.GetDataFilterTaskEvent" Collapsed="true">
+    <Position X="15.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\GetDataFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeManagementSystem.Objects.GetDataFilterContact" Collapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\GetDataFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TimeManagementSystem.Objects.IBaseObject">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Base\IBaseObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TimeManagementSystem.Objects.ISaveObject">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Objects\Base\ISaveObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="TimeManagementSystem.Objects.CommandAttribute">
+    <Position X="10.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQAAAAAEAAAAAQAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Enumerators\CommandAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TimeManagementSystem.Objects.Enumerators.EventListType">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQACAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Objects\Enumerators\EventListType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TimeManagementSystem.Objects.EventType">
+    <Position X="10.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Objects\Enumerators\EventType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
