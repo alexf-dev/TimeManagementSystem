@@ -37,6 +37,10 @@ namespace TimeManagementSystem.Forms
         {
             InitializeComponent();
 
+            dateTimePicker2.Format = DateTimePickerFormat.Custom;
+            dateTimePicker2.CustomFormat = "HH:mm:00";
+            dateTimePicker2.ShowUpDown = true;
+
             if (isNewRecord)
                 this.Text = "New event";
 
@@ -81,6 +85,12 @@ namespace TimeManagementSystem.Forms
 
             if (IsValidData(out result))
             {
+                if (!IsNotDuplicateObject())
+                {
+                    MessageBox.Show("Name object include in DB", "Attention!");
+                    return;
+                }
+
                 bool isSuccess = false;
                 
                 if (((eventTypeHelper)cmbEventTypes.SelectedItem).EventType == EventType.Appointment)
@@ -132,18 +142,35 @@ namespace TimeManagementSystem.Forms
             return true;
         }
 
+        private bool IsNotDuplicateObject()
+        {
+            TimeSpan dayTime = new TimeSpan();
+            if (!TimeSpan.TryParse(dateTimePicker2.Text, out dayTime))
+                return false;
+
+            BaseEvent _event = (BaseEvent)(DataTransfer.GetDataObject<BaseEvent>(new EventDataFilter { DayDate = (dateTimePicker1.Value.Date + dayTime) }));
+            if (_event != null)
+                return false;
+
+            return true;
+        }
+
         private bool SaveEvent(ISaveObject _event)
         {
+            TimeSpan dayTime = new TimeSpan();
+            if (!TimeSpan.TryParse(dateTimePicker2.Text, out dayTime))
+                return false;
+
             if (_event is AppointmentEvent)
             {
                 appointmentEvent = (AppointmentEvent)_event;
                 appointmentEvent.Name = textBox2.Text;
                 appointmentEvent.Description = textBox1.Text;
-                appointmentEvent.RegDate = dateTimePicker1.Value.Date + dateTimePicker2.Value.TimeOfDay;
+                appointmentEvent.RegDate = dateTimePicker1.Value.Date + dayTime;
                 appointmentEvent.Year = appointmentEvent.RegDate.Year;
                 appointmentEvent.Month = appointmentEvent.RegDate.Month;
                 appointmentEvent.Date = dateTimePicker1.Value.Date;
-                appointmentEvent.Time = dateTimePicker2.Value.TimeOfDay;
+                appointmentEvent.Time = dayTime;
                 appointmentEvent.RecDate = DateTime.Now;
                 if (cmbEventTypes.SelectedItem != null)
                     appointmentEvent.ActionType = ((eventTypeHelper)cmbEventTypes.SelectedItem).EventType;
@@ -161,11 +188,11 @@ namespace TimeManagementSystem.Forms
                 taskEvent = (TaskEvent)_event;
                 taskEvent.Name = textBox2.Text;
                 taskEvent.Description = textBox1.Text;
-                taskEvent.RegDate = dateTimePicker1.Value.Date + dateTimePicker2.Value.TimeOfDay;
+                taskEvent.RegDate = dateTimePicker1.Value.Date + dayTime;
                 taskEvent.Year = taskEvent.RegDate.Year;
                 taskEvent.Month = taskEvent.RegDate.Month;
                 taskEvent.Date = dateTimePicker1.Value.Date;
-                taskEvent.Time = dateTimePicker2.Value.TimeOfDay;
+                taskEvent.Time = dayTime;
                 taskEvent.RecDate = DateTime.Now;
                 taskEvent.ActionType = ((eventTypeHelper)cmbEventTypes.SelectedItem).EventType;
 

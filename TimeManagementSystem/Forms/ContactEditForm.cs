@@ -34,6 +34,12 @@ namespace TimeManagementSystem.Forms
 
             if (IsValidData(out result))
             {
+                if (!IsNotDuplicateObject())
+                {
+                    MessageBox.Show("Name object include in DB", "Attention!");
+                    return;
+                }
+
                 bool isSuccess = false;
                 
                 isSuccess = SaveContact(new Contact());
@@ -61,6 +67,15 @@ namespace TimeManagementSystem.Forms
                 result += "Contact name is empty\r\n";
 
             if (!string.IsNullOrWhiteSpace(result))
+                return false;
+
+            return true;
+        }
+
+        private bool IsNotDuplicateObject()
+        {
+            Contact contact = (Contact)(DataTransfer.GetDataObject<Contact>(new GetDataFilterContact { Name = textBox1.Text }));
+            if (contact != null)
                 return false;
 
             return true;

@@ -74,5 +74,11 @@ namespace TimeManagementSystem
             ContactList cl = new ContactList();
             cl.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            TimeSpan dt = TimeSpan.Parse(dateTimePicker1.Text);
+
+        }
     }
 }

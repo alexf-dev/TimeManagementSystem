@@ -22,8 +22,28 @@ namespace TimeManagementSystem.Data
         {
             if (typeof(T).Equals(typeof(TaskEvent)))
                 return GetData((GetDataFilterTaskEvent)filter);
+            else
+                if (typeof(T).Equals(typeof(Contact)))
+                    return GetData((GetDataFilterContact)filter);
+            else
+                if (typeof(T).Equals(typeof(BaseEvent)))
+                    return GetData((EventDataFilter)filter);
 
             return null;
+        }
+
+        private static IBaseObject GetData(EventDataFilter filter)
+        {
+            var customer = new List<BaseEvent>();
+            using (var conn = OpenConnection(ConnectionString))
+            {
+                if (filter.DayDate != DateTime.MinValue)
+                {
+                    customer = conn.Query<BaseEvent>("SELECT id as Id, name as Name, description as Description, year as Year, month as Month, date_regdate as Date, reg_date as RegDate, event_type as ActionType, rec_date as RecDate, del_rec as DelRec FROM t_events WHERE reg_date = @FilterRegDate ", new { FilterRegDate = filter.DayDate }).ToList();
+                }
+            }
+
+            return customer.Count > 0 ? customer.First() : null;
         }
 
         private static IBaseObject GetData(GetDataFilterTaskEvent filter)
@@ -43,6 +63,20 @@ namespace TimeManagementSystem.Data
                 query += queryFilter;
 
                 customer = conn.Query<TaskEvent>(query).ToList();
+            }
+
+            return customer.Count > 0 ? customer.First() : null;
+        }
+
+        private static IBaseObject GetData(GetDataFilterContact filter)
+        {
+            var customer = new List<Contact>();
+            using (var conn = OpenConnection(ConnectionString))
+            {
+                if (!string.IsNullOrWhiteSpace(filter.Name))
+                {
+                    customer = conn.Query<Contact>("SELECT id as Id, name as Name, phone as Phone, email as EMail, rec_date as RecDate, del_rec as DelRec FROM t_contacts WHERE UPPER(name) like @ContactName ", new { ContactName = filter.Name.ToUpper() }).ToList();
+                }
             }
 
             return customer.Count > 0 ? customer.First() : null;

@@ -33,6 +33,8 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contactListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -50,8 +52,6 @@
             this.btnDayEventList = new System.Windows.Forms.Button();
             this.dtpDay = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contactListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -103,6 +103,21 @@
             this.toolStripMenuItem3.Size = new System.Drawing.Size(55, 27);
             this.toolStripMenuItem3.Text = "   Exit   ";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contactListToolStripMenuItem});
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(44, 27);
+            this.addToolStripMenuItem.Text = "View";
+            // 
+            // contactListToolStripMenuItem
+            // 
+            this.contactListToolStripMenuItem.Name = "contactListToolStripMenuItem";
+            this.contactListToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.contactListToolStripMenuItem.Text = "Contact list";
+            this.contactListToolStripMenuItem.Click += new System.EventHandler(this.contactListToolStripMenuItem_Click);
             // 
             // panel2
             // 
@@ -269,21 +284,6 @@
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Day plan:";
-            // 
-            // addToolStripMenuItem
-            // 
-            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contactListToolStripMenuItem});
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(44, 27);
-            this.addToolStripMenuItem.Text = "View";
-            // 
-            // contactListToolStripMenuItem
-            // 
-            this.contactListToolStripMenuItem.Name = "contactListToolStripMenuItem";
-            this.contactListToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.contactListToolStripMenuItem.Text = "Contact list";
-            this.contactListToolStripMenuItem.Click += new System.EventHandler(this.contactListToolStripMenuItem_Click);
             // 
             // MainForm
             // 
