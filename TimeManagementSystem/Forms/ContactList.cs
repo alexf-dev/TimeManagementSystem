@@ -18,10 +18,24 @@ namespace TimeManagementSystem.Forms
         {
             InitializeComponent();
 
+            RefreshData();
+        }
+
+        private void RefreshData()
+        {
+            button1.Enabled = false;
+
             List<Contact> contacts = (DataTransfer.GetDataObjects<Contact>(new GetDataFilterContact { AllObjects = true })).ConvertAll(it => (Contact)it);
 
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = contacts.ToList();
+
+            button1.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }

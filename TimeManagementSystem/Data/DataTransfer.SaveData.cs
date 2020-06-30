@@ -54,35 +54,13 @@ namespace TimeManagementSystem.Data
                             }
                             catch (Exception exc)
                             {
-                                MessageBox.Show("Error writing to database: " + Environment.NewLine + exc.Message);
+                                MessageBox.Show("Error saving to database: " + Environment.NewLine + exc.Message);
                             }
                         }
                         break;
                     case CommandAttribute.UPDATE:
-                        {
-                            try
-                            {
-                                var updateSQL = "UPDATE public.t_users SET workplace_id = @WorkplaceId, department_id = @DepartmentId, username = @UserName, password = @Password, status = @Status, access_level_value = @AccessLevelValue, rec_date = now(), del_rec = @DelRec WHERE id = @Id ;";
-                                affectedRows = conn.Execute(updateSQL, saveObject);
-                            }
-                            catch (Exception exc)
-                            {
-                                MessageBox.Show("Ошибка обновления записи в БД: " + Environment.NewLine + exc.Message);
-                            }
-                        }
                         break;
                     case CommandAttribute.DELETE:
-                        {
-                            try
-                            {
-                                var deleteSQL = "DELETE FROM public.t_users WHERE id = @Id;";
-                                affectedRows = conn.Execute(deleteSQL, saveObject);
-                            }
-                            catch (Exception exc)
-                            {
-                                MessageBox.Show("Ошибка удаления записи в БД: " + Environment.NewLine + exc.Message);
-                            }
-                        }
                         break;
                     default:
                         break;
@@ -123,30 +101,8 @@ namespace TimeManagementSystem.Data
                         }
                         break;
                     case CommandAttribute.UPDATE:
-                        {
-                            try
-                            {
-                                var updateSQL = "UPDATE public.t_users SET workplace_id = @WorkplaceId, department_id = @DepartmentId, username = @UserName, password = @Password, status = @Status, access_level_value = @AccessLevelValue, rec_date = now(), del_rec = @DelRec WHERE id = @Id ;";
-                                affectedRows = conn.Execute(updateSQL, saveObject);
-                            }
-                            catch (Exception exc)
-                            {
-                                MessageBox.Show("Ошибка обновления записи в БД: " + Environment.NewLine + exc.Message);
-                            }
-                        }
                         break;
                     case CommandAttribute.DELETE:
-                        {
-                            try
-                            {
-                                var deleteSQL = "DELETE FROM public.t_users WHERE id = @Id;";
-                                affectedRows = conn.Execute(deleteSQL, saveObject);
-                            }
-                            catch (Exception exc)
-                            {
-                                MessageBox.Show("Ошибка удаления записи в БД: " + Environment.NewLine + exc.Message);
-                            }
-                        }
                         break;
                     default:
                         break;

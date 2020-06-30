@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TimeManagementSystem.Objects
 {
+    /// <summary>
+    /// Class for creating a filter. Sets parameters when retrieving objects from the database.
+    /// </summary>
     public class GetDataFilter
     {
         public Guid? Id { get; set; }
@@ -27,6 +30,9 @@ namespace TimeManagementSystem.Objects
         }
     }
 
+    /// <summary>
+    /// Class for creating an event filter.
+    /// </summary>
     public class EventDataFilter : GetDataFilter
     {
         public bool IsDayPlan { get; set; }
@@ -38,14 +44,23 @@ namespace TimeManagementSystem.Objects
         public int Month { get; set; }
     }
 
+    /// <summary>
+    /// Class for identifying the filter by AppointmentEvent.
+    /// </summary>
     public class GetDataFilterAppointmentEvent : EventDataFilter
     {
     }
 
+    /// <summary>
+    /// Class for identifying the filter by TaskEvent.
+    /// </summary>
     public class GetDataFilterTaskEvent : EventDataFilter
     {
     }
 
+    /// <summary>
+    /// Classes for identifying the filter by Contacts.
+    /// </summary>
     public class GetDataFilterContact : GetDataFilter
     {
 
