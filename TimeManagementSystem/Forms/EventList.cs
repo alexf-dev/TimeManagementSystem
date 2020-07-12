@@ -20,6 +20,12 @@ namespace TimeManagementSystem.Forms
         public DateTime EndDate { get; set; }
         public int Month { get; set; }
 
+        private EventListType _planType;
+        private DateTime? _dayDate;
+        private DateTime? _beginDate;
+        private DateTime? _endDate;
+        private int? _mont;
+
         class helper
         {
             public string Name { get; set; }
@@ -41,6 +47,19 @@ namespace TimeManagementSystem.Forms
 
             tabControl1.TabPages.Remove(tabPage3);
 
+            _planType = planType;
+            _dayDate = dayDate;
+            _beginDate = beginDate;
+            _endDate = endDate;
+            _mont = month;
+
+            RefreshData(_planType, _dayDate, _beginDate, _endDate, _mont);             
+        }
+
+        private void RefreshData(EventListType planType, DateTime? dayDate, DateTime? beginDate, DateTime? endDate, int? month)
+        {
+            dataGridView1.DataSource = null;
+
             switch (planType)
             {
                 case EventListType.DayPlan:
@@ -61,7 +80,7 @@ namespace TimeManagementSystem.Forms
                     tabPage2.Text = "Month plan";
                     SetMonthEvents(Month);
                     break;
-            }              
+            }
         }
 
         private void SetDayEvents(DateTime date)
@@ -206,6 +225,11 @@ namespace TimeManagementSystem.Forms
                 e.Value = "";
                 e.FormattingApplied = true;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RefreshData(_planType, _dayDate, _beginDate, _endDate, _mont);
         }
     }
 }
