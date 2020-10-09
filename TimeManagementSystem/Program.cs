@@ -20,5 +20,7 @@ namespace TimeManagementSystem
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
+
+        // Commit Study
     }
 }
