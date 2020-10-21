@@ -21,6 +21,6 @@ namespace TimeManagementSystem
             Application.Run(new MainForm());
         }
 
-        // master
+        // staging
     }
 }
