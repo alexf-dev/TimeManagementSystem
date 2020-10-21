@@ -20,8 +20,5 @@ namespace TimeManagementSystem
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
-
-        // Commit in BR1
-        // Commit Study
     }
 }
