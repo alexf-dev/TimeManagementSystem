@@ -21,11 +21,7 @@ namespace TimeManagementSystem
             Application.Run(new MainForm());
         }
 
-<<<<<<< .merge_file_a12920
         // br1-commit
         // master
-=======
-        // staging
->>>>>>> .merge_file_a20440
     }
 }
